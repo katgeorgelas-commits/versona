@@ -22,9 +22,15 @@ export default async function FeedPage() {
 
   return (
     <MainShell user={user}>
-      <div className="mx-auto max-w-feed space-y-3">
-        <MomentsRow moments={moments} user={user} />
-        <PostComposer user={user} missions={composerMissions} />
+      {/* White feed column: full-bleed to the nav rail on the left, divided
+          edge-to-edge. Right rail (in MainShell) stays beige. */}
+      <div className="-ml-6 min-h-screen border-r border-line bg-bg md:-ml-10">
+        <div className="border-b border-line px-4 py-3">
+          <MomentsRow moments={moments} user={user} />
+        </div>
+        <div className="border-b border-line">
+          <PostComposer user={user} missions={composerMissions} flush />
+        </div>
         <FeedList
           posts={posts}
           empty="Your feed is quiet. Join a mission or circle, or follow some people, to see conversations here."

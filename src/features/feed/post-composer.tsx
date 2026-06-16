@@ -18,18 +18,39 @@ import { createPost } from "./actions";
 
 const TYPES: PostType[] = ["discussion", "question", "update", "prompt_response"];
 
+/** Card box by default; a plain padded div when flush (inside a feed column). */
+function ComposerShell({
+  flush,
+  pad,
+  children,
+}: {
+  flush: boolean;
+  pad: string;
+  children: React.ReactNode;
+}) {
+  if (flush) return <div className={pad}>{children}</div>;
+  return (
+    <Card>
+      <CardContent className={pad}>{children}</CardContent>
+    </Card>
+  );
+}
+
 export function PostComposer({
   user,
   missions,
   defaultMissionSlug,
   weeklyPromptId,
   lockMission = false,
+  flush = false,
 }: {
   user: SessionUser;
   missions: { slug: string; name: string }[];
   defaultMissionSlug?: string;
   weeklyPromptId?: string;
   lockMission?: boolean;
+  /** Drop the Card box so the composer sits flush inside a feed column. */
+  flush?: boolean;
 }) {
   const router = useRouter();
   const { toast } = useToast();
@@ -122,22 +143,19 @@ export function PostComposer({
 
   if (!expanded) {
     return (
-      <Card>
-        <CardContent className="p-3">
-          <button onClick={() => setExpanded(true)} className="flex w-full items-center gap-3 text-left">
-            <Avatar name={user.displayName} src={user.avatarUrl} size={40} />
-            <span className="flex-1 rounded-full border-1.5 border-line bg-bg-muted px-4 py-2.5 text-[14px] text-ink-3">
-              Share something with the community…
-            </span>
-          </button>
-        </CardContent>
-      </Card>
+      <ComposerShell flush={flush} pad="p-3">
+        <button onClick={() => setExpanded(true)} className="flex w-full items-center gap-3 text-left">
+          <Avatar name={user.displayName} src={user.avatarUrl} size={40} />
+          <span className="flex-1 rounded-full border-1.5 border-line bg-bg-muted px-4 py-2.5 text-[14px] text-ink-3">
+            Share something with the community…
+          </span>
+        </button>
+      </ComposerShell>
     );
   }
 
   return (
-    <Card>
-      <CardContent className="p-4">
+    <ComposerShell flush={flush} pad="p-4">
         <div className="flex gap-3">
           <Avatar name={user.displayName} src={user.avatarUrl} size={40} />
           <div className="flex-1">
@@ -255,7 +273,6 @@ export function PostComposer({
             {notice && <p className="mt-2 text-xs text-muted-foreground">{notice}</p>}
           </div>
         </div>
-      </CardContent>
-    </Card>
+    </ComposerShell>
   );
 }

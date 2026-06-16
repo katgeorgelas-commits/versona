@@ -30,7 +30,7 @@ export function MomentsRow({ moments, user }: { moments: MomentView[]; user: Ses
 
   return (
     <>
-      <div className="flex gap-3 overflow-x-auto rounded-lg border-1.5 border-line bg-bg p-3">
+      <div className="flex gap-3 overflow-x-auto">
         {/* Add */}
         <button onClick={() => setComposeOpen(true)} className="flex w-16 shrink-0 flex-col items-center gap-1">
           <span className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-dashed border-accent text-accent">

@@ -16,7 +16,7 @@ export function FeedList({
     );
   }
   return (
-    <div className="divide-y divide-line border-y border-line">
+    <div className="divide-y divide-line bg-bg">
       {posts.map((p) => (
         <PostCard key={p.id} post={p} variant="row" />
       ))}
