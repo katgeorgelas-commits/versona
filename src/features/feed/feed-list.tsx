@@ -16,9 +16,9 @@ export function FeedList({
     );
   }
   return (
-    <div className="space-y-3">
+    <div className="divide-y divide-line overflow-hidden rounded-lg border-1.5 border-line bg-bg">
       {posts.map((p) => (
-        <PostCard key={p.id} post={p} />
+        <PostCard key={p.id} post={p} variant="row" />
       ))}
     </div>
   );

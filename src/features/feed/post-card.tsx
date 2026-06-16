@@ -23,10 +23,13 @@ export function PostCard({
   post,
   embedded = false,
   expandReplies = false,
+  variant = "card",
 }: {
   post: PostView;
   embedded?: boolean;
   expandReplies?: boolean;
+  /** "card" = standalone bordered card; "row" = flush divider row in a feed list. */
+  variant?: "card" | "row";
 }) {
   const { toast } = useToast();
   const [counts, setCounts] = useState(post.reactions.counts);
@@ -131,10 +134,12 @@ export function PostCard({
     <article className={cn(
       embedded
         ? "rounded-lg border-1.5 border-line p-4"
-        : "rounded-lg border-1.5 bg-bg p-5",
-      !embedded && post.isPromptResponse
+        : variant === "row"
+          ? "px-5 py-4"
+          : "rounded-lg border-1.5 bg-bg p-5",
+      !embedded && variant === "card" && post.isPromptResponse
         ? "border-energy/60 bg-energy-light"
-        : !embedded && "border-line",
+        : !embedded && variant === "card" && "border-line",
       flagged && "opacity-70",
     )}>
       {/* Repost label */}
