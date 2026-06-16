@@ -12,7 +12,7 @@
     --font-display: "Schibsted Grotesk", "Hanken Grotesk", sans-serif;
 
     /* Backgrounds — tinted page canvas + white surfaces (depth via contrast) */
-    --color-canvas: #f6f4f1;
+    --color-canvas: #faf9f7;
     --color-bg: #ffffff;
     --color-bg-subtle: #fbfafa;
     --color-bg-muted: #f1efec;

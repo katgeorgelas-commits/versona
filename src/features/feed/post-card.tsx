@@ -135,7 +135,7 @@ export function PostCard({
       embedded
         ? "rounded-lg border-1.5 border-line p-4"
         : variant === "row"
-          ? "px-5 py-4 transition-colors hover:bg-bg-muted"
+          ? "px-5 py-7 transition-colors hover:bg-bg-subtle"
           : "rounded-lg border-1.5 bg-bg p-5",
       !embedded && variant === "card" && post.isPromptResponse
         ? "border-energy/60 bg-energy-light"
@@ -218,7 +218,7 @@ export function PostCard({
 
       {/* Prompt question (only when this post replies to the weekly prompt) */}
       {!embedded && post.isPromptResponse && post.promptText && (
-        <div className="mt-3 rounded-md bg-energy px-3.5 py-2.5 text-white">
+        <div className="mt-3 rounded-md border-l-4 border-energy bg-energy-light px-3.5 py-2.5 text-energy-ink">
           <div className="mb-1 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.12em]">
             <Sparkles className="h-3 w-3" /> Replying to this week&apos;s prompt
           </div>

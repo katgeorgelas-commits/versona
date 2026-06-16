@@ -104,7 +104,7 @@ export function NavRail({
   ];
 
   return (
-    <nav className="sticky top-0 z-30 flex h-screen w-[68px] shrink-0 flex-col gap-1 overflow-y-auto border-r-1.5 border-line bg-canvas px-2 py-4 lg:w-[244px] lg:px-3">
+    <nav className="sticky top-0 z-30 flex h-screen w-[68px] shrink-0 flex-col gap-1 overflow-y-auto border-r-1.5 border-line bg-canvas px-2 py-4 lg:w-[280px] lg:px-3">
       {/* Logo — wordmark at lg, mark-only when collapsed */}
       <Link
         href="/feed"
