@@ -1,13 +1,12 @@
-import { LeftRail } from "@/features/shell/left-rail";
 import { RightRail } from "@/features/shell/right-rail";
 import type { SessionUser } from "@/types/app";
 
 /**
- * Three-column shell (LinkedIn-style) for the main pages.
- *   mobile  → center only
- *   md      → left rail + center
- *   lg      → left rail + center + right rail
- * Center is min-w-0 so it never overflows; rails are sticky (set in the rails).
+ * Content shell for the main pages. Primary navigation now lives in the global
+ * NavRail (see layout), so this is just the center column + optional right rail.
+ *   mobile / md → center only
+ *   lg          → center + right rail
+ * Center is min-w-0 so it never overflows; the right rail is sticky.
  */
 export function MainShell({
   user,
@@ -22,13 +21,10 @@ export function MainShell({
     <div
       className={
         right
-          ? "grid grid-cols-1 gap-6 md:grid-cols-[210px_minmax(0,1fr)] lg:grid-cols-[210px_minmax(0,1fr)_310px]"
-          : "grid grid-cols-1 gap-6 md:grid-cols-[210px_minmax(0,1fr)]"
+          ? "grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_310px]"
+          : "grid grid-cols-1"
       }
     >
-      <aside className="hidden md:block">
-        <LeftRail user={user} />
-      </aside>
       <div className="min-w-0">{children}</div>
       {right && (
         <aside className="hidden lg:block">

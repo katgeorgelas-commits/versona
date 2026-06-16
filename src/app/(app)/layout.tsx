@@ -1,12 +1,13 @@
 import { redirect } from "next/navigation";
-import { AppNav } from "@/components/layout/app-nav";
+import { NavRail } from "@/components/layout/nav-rail";
 import { MockUserSwitcher } from "@/components/dev/mock-user-switcher";
 import { getSessionUser, isMockAuth } from "@/lib/auth/session";
 import { createServiceClient } from "@/lib/supabase/server";
 import { isOfflineDemo, OFFLINE_USER_LIST } from "@/lib/dev/offline";
 import { getThreads } from "@/features/messaging/data";
 import { MessageDock } from "@/features/messaging/message-dock";
-import { getNotifications, getUnreadCount } from "@/features/notifications/data";
+import { getUnreadCount } from "@/features/notifications/data";
+import { getProfileView } from "@/features/profile/data";
 import { ToastProvider } from "@/components/ui/toast";
 
 /**
@@ -21,11 +22,20 @@ export default async function AppLayout({
   const user = await getSessionUser();
   if (!user) redirect("/");
 
-  const [threads, notifications, unread] = await Promise.all([
+  const [threads, unread, profile] = await Promise.all([
     getThreads(user.id),
-    getNotifications(user.id),
     getUnreadCount(user.id),
+    getProfileView(user.username, user.id),
   ]);
+
+  const messageUnread = threads.reduce((sum, t) => sum + t.unread, 0);
+  const railProfile = profile
+    ? {
+        completeness: profile.completeness,
+        followerCount: profile.followerCount,
+        headline: profile.headline,
+      }
+    : null;
 
   let switcherUsers: { username: string; displayName: string }[] = [];
   if (isMockAuth) {
@@ -44,10 +54,17 @@ export default async function AppLayout({
 
   return (
     <ToastProvider>
-      <AppNav user={user} notifications={notifications} unread={unread} threads={threads} />
-      <main className="mx-auto min-h-screen max-w-app px-6 py-8 md:px-10">
-        {children}
-      </main>
+      <div className="flex min-h-screen">
+        <NavRail
+          user={user}
+          profile={railProfile}
+          unread={unread}
+          messageUnread={messageUnread}
+        />
+        <div className="min-w-0 flex-1">
+          <main className="mx-auto max-w-app px-6 py-8 md:px-10">{children}</main>
+        </div>
+      </div>
       <MessageDock threads={threads} viewerId={user.id} />
       {isMockAuth && (
         <MockUserSwitcher current={user.username} users={switcherUsers} />

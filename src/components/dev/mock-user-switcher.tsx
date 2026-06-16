@@ -34,7 +34,7 @@ export function MockUserSwitcher({
         🧪 dev: @{current}
       </button>
       {open && (
-        <div className="mt-2 w-52 overflow-hidden rounded-lg border-1.5 border-line bg-bg">
+        <div className="absolute bottom-full left-0 mb-2 w-52 overflow-hidden rounded-lg border-1.5 border-line bg-bg">
           {users.map((u) => (
             <button
               key={u.username}
