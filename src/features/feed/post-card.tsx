@@ -135,7 +135,7 @@ export function PostCard({
       embedded
         ? "rounded-lg border-1.5 border-line p-4"
         : variant === "row"
-          ? "px-5 py-4"
+          ? "px-5 py-4 transition-colors hover:bg-bg-muted"
           : "rounded-lg border-1.5 bg-bg p-5",
       !embedded && variant === "card" && post.isPromptResponse
         ? "border-energy/60 bg-energy-light"
